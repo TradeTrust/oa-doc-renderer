@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import connectToParent from "penpal/lib/connectToParent";
 import DocumentViewer from "./documentViewer";
 import Templates from "./documentTemplates/default";
-import "./documentViewerContainer.css";
 const inIframe = () => window.location !== window.parent.location;
 const flatten = o => JSON.parse(JSON.stringify(o));
 
@@ -13,14 +12,30 @@ class DocumentViewerContainer extends Component {
 
     this.handleCertificateChange = this.handleCertificateChange.bind(this);
     this.selectTemplateTab = this.selectTemplateTab.bind(this);
-    this.state = { parentFrameConnection: null, document: null, tabIndex: 0 };
+    this.updateHeight = this.updateHeight.bind(this);
+    this.state = {
+      parentFrameConnection: null,
+      document: null,
+      tabIndex: 0,
+      nonce: 0
+    };
+  }
+
+  updateHeight(h) {
+    if (inIframe()) {
+      this.state.parentFrameConnection.promise.then(parent => {
+        if (parent.updateHeight) {
+          parent.updateHeight(h);
+        }
+      });
+    }
   }
 
   componentDidUpdate() {
     if (inIframe()) {
       this.state.parentFrameConnection.promise.then(parent => {
         if (parent.updateHeight) {
-          parent.updateHeight(document.documentElement.scrollHeight);
+          parent.updateHeight(document.documentElement.offsetHeight + 60);
         }
         if (parent.updateTemplates) parent.updateTemplates(flatten(Templates));
       });
@@ -28,19 +43,19 @@ class DocumentViewerContainer extends Component {
   }
 
   componentDidMount() {
-    const renderCertificate = this.handleCertificateChange;
+    const renderDocument = this.handleCertificateChange;
     const selectTemplateTab = this.selectTemplateTab;
-    const frameHeight = document.documentElement.scrollHeight;
+    const frameHeight = document.documentElement.offsetHeight + 60;
 
     window.opencerts = {
-      renderCertificate,
+      renderDocument,
       selectTemplateTab
     };
 
     if (inIframe()) {
       const parentFrameConnection = connectToParent({
         methods: {
-          renderCertificate,
+          renderDocument,
           selectTemplateTab,
           frameHeight
         }
@@ -62,12 +77,11 @@ class DocumentViewerContainer extends Component {
       return null;
     }
     return (
-      <div className="container cert-border">
-        <DocumentViewer
-          document={this.state.document}
-          tabIndex={this.state.tabIndex}
-        />
-      </div>
+      <DocumentViewer
+        document={this.state.document}
+        tabIndex={this.state.tabIndex}
+        handleUpdate={this.updateHeight}
+      />
     );
   }
 }

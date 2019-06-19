@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import DocumentViewerContainer from "./components/documentViewerContainer";
 import * as serviceWorker from "./serviceWorker";
-import "bootstrap/dist/css/bootstrap.css";
 
 ReactDOM.render(<DocumentViewerContainer />, document.getElementById("root"));
 
