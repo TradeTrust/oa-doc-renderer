@@ -1,0 +1,4 @@
+{
+  "plugins": ["dynamic-import-webpack"],
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}

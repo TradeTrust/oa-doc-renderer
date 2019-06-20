@@ -2,50 +2,65 @@ import React, { Component } from "react";
 
 import connectToParent from "penpal/lib/connectToParent";
 import DocumentViewer from "./documentViewer";
-import Templates from "./documentTemplates/default";
-const inIframe = () => window.location !== window.parent.location;
-const flatten = o => JSON.parse(JSON.stringify(o));
+import { documentTemplateTabs } from "./documentViewer/utils";
 
+const HEIGHT_OFFSET = 60; // Height offset to prevent double scrollbar in certain browsers
+const inIframe = () => window.location !== window.parent.location;
 class DocumentViewerContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.handleCertificateChange = this.handleCertificateChange.bind(this);
+    this.handleDocumentChange = this.handleDocumentChange.bind(this);
     this.selectTemplateTab = this.selectTemplateTab.bind(this);
-    this.updateHeight = this.updateHeight.bind(this);
+    this.updateParentHeight = this.updateParentHeight.bind(this);
+    this.updateParentTemplateTabs = this.updateParentTemplateTabs.bind(this);
     this.state = {
       parentFrameConnection: null,
       document: null,
-      tabIndex: 0,
-      nonce: 0
+      tabIndex: 0
     };
   }
 
-  updateHeight(h) {
+  updateParentHeight(height) {
+    const { parentFrameConnection } = this.state;
     if (inIframe()) {
-      this.state.parentFrameConnection.promise.then(parent => {
+      parentFrameConnection.promise.then(parent => {
         if (parent.updateHeight) {
-          parent.updateHeight(h);
+          parent.updateHeight(height);
         }
       });
     }
+  }
+
+  updateParentTemplateTabs() {
+    const { parentFrameConnection } = this.state;
+    if (inIframe()) {
+      parentFrameConnection.promise.then(parent => {
+        if (parent.updateTemplates) {
+          parent.updateTemplates(documentTemplateTabs(this.state.document));
+        }
+      });
+    }
+  }
+
+  selectTemplateTab(tabIndex) {
+    this.setState({ tabIndex });
+  }
+
+  handleDocumentChange(document) {
+    this.setState({ document });
   }
 
   componentDidUpdate() {
-    if (inIframe()) {
-      this.state.parentFrameConnection.promise.then(parent => {
-        if (parent.updateHeight) {
-          parent.updateHeight(document.documentElement.offsetHeight + 60);
-        }
-        if (parent.updateTemplates) parent.updateTemplates(flatten(Templates));
-      });
-    }
+    this.updateParentTemplateTabs();
+    this.updateParentHeight(
+      document.documentElement.offsetHeight + HEIGHT_OFFSET
+    );
   }
 
   componentDidMount() {
-    const renderDocument = this.handleCertificateChange;
+    const renderDocument = this.handleDocumentChange;
     const selectTemplateTab = this.selectTemplateTab;
-    const frameHeight = document.documentElement.offsetHeight + 60;
 
     window.opencerts = {
       renderDocument,
@@ -56,20 +71,11 @@ class DocumentViewerContainer extends Component {
       const parentFrameConnection = connectToParent({
         methods: {
           renderDocument,
-          selectTemplateTab,
-          frameHeight
+          selectTemplateTab
         }
       });
       this.setState({ parentFrameConnection });
     }
-  }
-
-  selectTemplateTab(idx) {
-    this.setState({ tabIndex: idx });
-  }
-
-  handleCertificateChange(doc) {
-    this.setState({ document: doc });
   }
 
   render() {
@@ -80,7 +86,7 @@ class DocumentViewerContainer extends Component {
       <DocumentViewer
         document={this.state.document}
         tabIndex={this.state.tabIndex}
-        handleUpdate={this.updateHeight}
+        handleHeightUpdate={this.updateParentHeight}
       />
     );
   }
