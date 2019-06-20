@@ -23,7 +23,7 @@ export default class PdfRenderer extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data } = this.props.attachment;
     const { numPages } = this.state;
 
     return (
@@ -47,6 +47,8 @@ export default class PdfRenderer extends Component {
 }
 
 PdfRenderer.propTypes = {
-  data: PropTypes.string.isRequired,
+  attachment: PropTypes.shape({
+    data: PropTypes.string.isRequired
+  }).isRequired,
   handleHeightUpdate: PropTypes.func.isRequired
 };

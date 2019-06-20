@@ -21,6 +21,7 @@ class DocumentViewerContainer extends Component {
     };
   }
 
+  // Use postMessage to update iframe's parent to scale the height
   updateParentHeight(height) {
     const { parentFrameConnection } = this.state;
     if (inIframe()) {
@@ -32,6 +33,7 @@ class DocumentViewerContainer extends Component {
     }
   }
 
+  // Use postMessage to update iframe's parent on the selection of templates available for this document
   updateParentTemplateTabs() {
     const { parentFrameConnection } = this.state;
     if (inIframe()) {
@@ -62,7 +64,7 @@ class DocumentViewerContainer extends Component {
     const renderDocument = this.handleDocumentChange;
     const selectTemplateTab = this.selectTemplateTab;
 
-    window.opencerts = {
+    window.openAttestation = {
       renderDocument,
       selectTemplateTab
     };
