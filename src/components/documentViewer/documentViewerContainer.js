@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import connectToParent from "penpal/lib/connectToParent";
 import DocumentViewer from "./documentViewer";
-import { documentTemplateTabs } from "./documentViewer/utils";
+import { documentTemplateTabs } from "./utils";
 
 const HEIGHT_OFFSET = 60; // Height offset to prevent double scrollbar in certain browsers
 const inIframe = () => window.location !== window.parent.location;

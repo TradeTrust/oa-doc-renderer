@@ -1,36 +1,13 @@
-import React from "react";
-
 import templateRegistry from "../../templates";
 import { get } from "lodash";
-import PdfRenderer from "../pdfRenderer";
-import NullRenderer from "../nullRenderer";
-
-export const selectRenderer = (attachment, { handleHeightUpdate }) => {
-  const { type } = attachment;
-  let AttachmentRenderer;
-
-  switch (type) {
-    case "application/pdf":
-      AttachmentRenderer = PdfRenderer;
-      break;
-    default:
-      AttachmentRenderer = NullRenderer;
-  }
-
-  return () => (
-    <AttachmentRenderer
-      attachment={attachment}
-      handleHeightUpdate={handleHeightUpdate}
-    />
-  );
-};
+import selectRenderer from "../../attachmentRenderer";
 
 export const attachmentToTemplate = (attachments, handleHeightUpdate) => {
   return attachments.map((attachment, index) => {
     return {
       id: `attachment-${index}`,
       label: attachment.filename,
-      template: selectRenderer(attachment, { handleHeightUpdate })
+      template: selectRenderer({ attachment, handleHeightUpdate })
     };
   });
 };

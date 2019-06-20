@@ -9,7 +9,7 @@ const Template = ({ document }) => (
 );
 
 Template.propTypes = {
-  document: PropTypes.object.isRequired  
+  document: PropTypes.object.isRequired
 };
 
 export default Template;

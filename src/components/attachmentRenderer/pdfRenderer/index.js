@@ -9,18 +9,24 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 }/pdf.worker.js`;
 
 export default class PdfRenderer extends Component {
-  state = {
-    numPages: null
-  };
+  constructor(props) {
+    super(props);
+    this.onDocumentLoadSuccess = this.onDocumentLoadSuccess.bind(this);
+    this.onPageLoadSuccess = this.onPageLoadSuccess.bind(this);
 
-  onDocumentLoadSuccess = ({ numPages }) => {
+    this.state = {
+      numPages: null
+    };
+  }
+
+  onDocumentLoadSuccess({ numPages }) {
     this.setState({ numPages });
     this.props.handleHeightUpdate(document.documentElement.offsetHeight);
-  };
+  }
 
-  onPageLoadSuccess = () => {
+  onPageLoadSuccess() {
     this.props.handleHeightUpdate(document.documentElement.offsetHeight);
-  };
+  }
 
   render() {
     const { data } = this.props.attachment;
