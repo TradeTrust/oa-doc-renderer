@@ -1,16 +1,6 @@
 import templateRegistry from "../../templates";
 import { get } from "lodash";
-import selectRenderer from "../../attachmentRenderer";
-
-export const attachmentToTemplate = (attachments, handleHeightUpdate) => {
-  return attachments.map((attachment, index) => {
-    return {
-      id: `attachment-${index}`,
-      label: attachment.filename,
-      template: selectRenderer({ attachment, handleHeightUpdate })
-    };
-  });
-};
+import attachmentToTemplates from "../../attachmentTemplates";
 
 export const documentTemplates = (document, handleHeightUpdate) => {
   if (!document) return [];
@@ -21,7 +11,7 @@ export const documentTemplates = (document, handleHeightUpdate) => {
 
   // Create additional tabs from attachments, passing in handleHeightUpdate to allow
   // attachment renderers to update parent component height
-  const templatesFromAttachments = attachmentToTemplate(
+  const templatesFromAttachments = attachmentToTemplates(
     get(document, "attachments", []),
     handleHeightUpdate
   );

@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import PdfRenderer from "./pdfRenderer";
 import NullRenderer from "./nullRenderer";
 
-const selectRenderer = ({ attachment, handleHeightUpdate }) => {
+// Generates a template function depending on attachment type
+const attachmentTemplateSelector = ({ attachment, handleHeightUpdate }) => {
   const { type } = attachment;
   let AttachmentRenderer;
 
@@ -25,9 +26,19 @@ const selectRenderer = ({ attachment, handleHeightUpdate }) => {
   return template;
 };
 
-export default selectRenderer;
-
-selectRenderer.propTypes = {
+attachmentTemplateSelector.propTypes = {
   attachment: PropTypes.object.isRequired,
   handleHeightUpdate: PropTypes.func.isRequired
 };
+
+const attachmentToTemplates = (attachments, handleHeightUpdate) => {
+  return attachments.map((attachment, index) => {
+    return {
+      id: `attachment-${index}`,
+      label: attachment.filename,
+      template: attachmentTemplateSelector({ attachment, handleHeightUpdate })
+    };
+  });
+};
+
+export default attachmentToTemplates;
