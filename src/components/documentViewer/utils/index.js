@@ -1,6 +1,6 @@
 import React from "react";
 
-import DefaultTemplates from "../../documentTemplates/default";
+import templateRegistry from "../../templates";
 import { get } from "lodash";
 import PdfRenderer from "../pdfRenderer";
 
@@ -17,13 +17,14 @@ export const attachmentToTemplate = (attachments, handleHeightUpdate) => {
   });
 };
 
-// Given a document, return an array of template object
-// Each template object will have id, label and a template function
-// handleHeightUpdate() can be passed into these templates if they need to trigger
 export const documentTemplates = (document, handleHeightUpdate) => {
-  // TODO: Switch template by the template name instead of using just the default template
   if (!document) return [];
-  const selectedTemplate = DefaultTemplates;
+  // Find the template in the template registry or use a default template
+  const templateName = get(document, "$template.name");
+  const selectedTemplate = templateRegistry[templateName] || templateRegistry.default;
+
+  // Create additional tabs from attachments, passing in handleHeightUpdate to allow
+  // attachment renderers to update parent component height
   const templatesFromAttachments = attachmentToTemplate(
     get(document, "attachments", []),
     handleHeightUpdate
@@ -31,7 +32,6 @@ export const documentTemplates = (document, handleHeightUpdate) => {
   return [...selectedTemplate, ...templatesFromAttachments];
 };
 
-// Returning only the id and labels for the templates
 export const documentTemplateTabs = document => {
   const templates = documentTemplates(document);
   return templates.map(template => ({
