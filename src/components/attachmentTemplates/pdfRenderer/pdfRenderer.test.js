@@ -25,7 +25,7 @@ it("passes in pdf data to Document", () => {
   );
 });
 
-it("renders Page after Document called onDocumentLoadSuccess", () => {
+it("renders Page and calls handleHeightUpdate", () => {
   const numPages = 2;
   const handleHeightUpdate = stub();
   const component = shallow(

@@ -9,6 +9,7 @@ bin-release/
 node_modules/
 dist/
 build/
+coverage/
 
 # Executables
 *.swf
