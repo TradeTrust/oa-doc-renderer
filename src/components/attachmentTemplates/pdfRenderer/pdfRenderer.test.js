@@ -1,6 +1,5 @@
 import React from "react";
 import { stub } from "sinon";
-import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
 import samplePdfData from "../../../../test/fixtures/pdf";
 import PdfRenderer from "./index";
@@ -8,13 +7,6 @@ import PdfRenderer from "./index";
 const attachment = {
   data: samplePdfData
 };
-
-it("renders", () => {
-  const tree = renderer.create(
-    <PdfRenderer attachment={attachment} handleHeightUpdate={() => {}} />
-  ).toJSON;
-  expect(tree).toMatchSnapshot();
-});
 
 it("passes in pdf data to Document", () => {
   const component = shallow(
