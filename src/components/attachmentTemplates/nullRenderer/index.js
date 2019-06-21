@@ -11,5 +11,7 @@ const NullRenderer = ({ attachment }) => (
 export default NullRenderer;
 
 NullRenderer.propTypes = {
-  attachment: PropTypes.object.isRequired
+  attachment: PropTypes.shape({
+    type: PropTypes.string.isRequired
+  }).isRequired
 };
