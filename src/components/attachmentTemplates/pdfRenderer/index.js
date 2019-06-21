@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { range } from "lodash";
 import { Document, Page, pdfjs } from "react-pdf";
-import { pageStyle } from "./pdfRenderer.module.scss";
+import style from "./pdfRenderer.module.scss";
 
 // https://github.com/wojtekmaj/react-pdf#browserify-and-others
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${
@@ -43,7 +43,7 @@ export default class PdfRenderer extends Component {
           // TODO: Dynamically resize width to fit container
           // https://github.com/wojtekmaj/react-pdf/issues/129
           <Page
-            className={pageStyle}
+            className={style.page}
             key={`page_${index + 1}`}
             pageNumber={index + 1}
             onLoadSuccess={this.onPageLoadSuccess}
