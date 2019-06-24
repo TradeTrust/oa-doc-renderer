@@ -2,10 +2,9 @@ import React, { Component } from "react";
 
 import connectToParent from "penpal/lib/connectToParent";
 import DocumentViewer from "./documentViewer";
-import { documentTemplateTabs } from "./utils";
+import { documentTemplateTabs, inIframe } from "./utils";
 
-const HEIGHT_OFFSET = 60; // Height offset to prevent double scrollbar in certain browsers
-const inIframe = () => window.location !== window.parent.location;
+export const HEIGHT_OFFSET = 60; // Height offset to prevent double scrollbar in certain browsers
 class DocumentViewerContainer extends Component {
   constructor(props) {
     super(props);
@@ -22,26 +21,21 @@ class DocumentViewerContainer extends Component {
   }
 
   // Use postMessage to update iframe's parent to scale the height
-  updateParentHeight(height) {
-    const { parentFrameConnection } = this.state;
+  async updateParentHeight(height) {
     if (inIframe()) {
-      parentFrameConnection.promise.then(parent => {
-        if (parent.updateHeight) {
-          parent.updateHeight(height);
-        }
-      });
+      const { parentFrameConnection } = this.state;
+      const parent = await parentFrameConnection;
+      if (parent.updateHeight) await parent.updateHeight(height);
     }
   }
 
   // Use postMessage to update iframe's parent on the selection of templates available for this document
-  updateParentTemplateTabs() {
-    const { parentFrameConnection } = this.state;
+  async updateParentTemplateTabs() {
     if (inIframe()) {
-      parentFrameConnection.promise.then(parent => {
-        if (parent.updateTemplates) {
-          parent.updateTemplates(documentTemplateTabs(this.state.document));
-        }
-      });
+      const { parentFrameConnection } = this.state;
+      const parent = await parentFrameConnection;
+      if (parent.updateTemplates)
+        await parent.updateTemplates(documentTemplateTabs(this.state.document));
     }
   }
 
@@ -75,7 +69,7 @@ class DocumentViewerContainer extends Component {
           renderDocument,
           selectTemplateTab
         }
-      });
+      }).promise;
       this.setState({ parentFrameConnection });
     }
   }

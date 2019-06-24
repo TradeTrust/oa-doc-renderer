@@ -25,3 +25,5 @@ export const documentTemplateTabs = document => {
     label: template.label
   }));
 };
+
+export const inIframe = () => window.location !== window.parent.location;
