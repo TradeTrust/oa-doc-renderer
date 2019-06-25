@@ -1,3 +1,5 @@
+import { documentTemplates, documentTemplateTabs } from "./index";
+
 jest.mock("../../templates", () => ({
   default: [
     { id: "default", label: "DEFAULT_TEMPLATE", template: "TEMPLATE_FN" }
@@ -16,8 +18,6 @@ jest.mock("../../attachmentTemplates", () => () => [
     template: "TEMPLATE_FN"
   }
 ]);
-
-import { documentTemplates, documentTemplateTabs } from "./index";
 
 describe("documentTemplates", () => {
   it("returns empty array if there is no document", () => {

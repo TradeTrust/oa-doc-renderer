@@ -26,4 +26,12 @@ export const documentTemplateTabs = document => {
   }));
 };
 
-export const inIframe = () => window.location !== window.parent.location;
+// Originally using https://tommcfarlin.com/check-if-a-page-is-in-an-iframe/
+// Currently using https://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
+export const inIframe = () => {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+};

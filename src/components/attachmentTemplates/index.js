@@ -4,7 +4,10 @@ import PdfRenderer from "./pdfRenderer";
 import NullRenderer from "./nullRenderer";
 
 // Generates a template function depending on attachment type
-const attachmentTemplateSelector = ({ attachment, handleHeightUpdate }) => {
+export const attachmentTemplateSelector = ({
+  attachment,
+  handleHeightUpdate
+}) => {
   const { type } = attachment;
   let AttachmentRenderer;
 

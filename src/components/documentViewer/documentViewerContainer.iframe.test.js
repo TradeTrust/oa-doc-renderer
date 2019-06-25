@@ -40,7 +40,7 @@ it("returns null if there are no document", () => {
 it("initialise and save connection to parent on mount to parentFrameConnection", () => {
   const component = shallow(<DocumentViewerContainer />);
 
-  expect(connectToParent).toBeCalled();
+  expect(connectToParent).toHaveBeenCalled();
   expect(connectToParent.mock.calls[0][0].methods.renderDocument).toBeTruthy();
   expect(connectToParent.mock.calls[0][0].methods.renderDocument).toBeTruthy();
   expect(component.state("parentFrameConnection")).toBeTruthy();
@@ -50,12 +50,14 @@ it("calls parent frame's updateHeight when updateParentHeight is called", async 
   const component = shallow(<DocumentViewerContainer />);
   resetMocks();
   await component.instance().updateParentHeight(1337);
-  expect(mockParent.updateHeight).toBeCalledWith(1337);
+  expect(mockParent.updateHeight).toHaveBeenCalledWith(1337);
 });
 
 it("calls parent frame's updateTemplates when updateParentTemplateTabs is called", async () => {
   const component = shallow(<DocumentViewerContainer />);
   resetMocks();
   await component.instance().updateParentTemplateTabs();
-  expect(mockParent.updateTemplates).toBeCalledWith(mockDocumentTemplateTabs);
+  expect(mockParent.updateTemplates).toHaveBeenCalledWith(
+    mockDocumentTemplateTabs
+  );
 });
