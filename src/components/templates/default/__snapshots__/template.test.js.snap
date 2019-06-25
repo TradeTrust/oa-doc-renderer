@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`default template matches snapshot 1`] = `
+<div
+  className="container"
+>
+  <pre>
+    {
+  "foo": "bar"
+}
+  </pre>
+</div>
+`;
