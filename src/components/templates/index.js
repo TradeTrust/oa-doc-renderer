@@ -9,5 +9,6 @@ import CustomTemplate from "./customTemplate";
 
 export default {
   default: DefaultTemplate,
-  CUSTOM_TEMPLATE: CustomTemplate
+  CUSTOM_TEMPLATE: CustomTemplate,
+  NULL: []
 };
