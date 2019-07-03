@@ -5,9 +5,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import style from "./pdfRenderer.module.scss";
 
 // https://github.com/wojtekmaj/react-pdf#browserify-and-others
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${
-  pdfjs.version
-}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default class PdfRenderer extends Component {
   constructor(props) {
