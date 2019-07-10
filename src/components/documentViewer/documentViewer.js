@@ -3,17 +3,18 @@ import PropTypes from "prop-types";
 import { documentTemplates } from "./utils";
 
 const DocumentViewer = props => {
-  const { tabIndex, document, handleHeightUpdate } = props;
+  const { tabIndex, document, handleHeightUpdate, obfuscateDocument } = props;
   const templates = documentTemplates(document, handleHeightUpdate);
   const Template = templates[tabIndex].template;
 
-  return <Template document={document} />;
+  return <Template document={document} handleObfuscation={obfuscateDocument} /> />;
 };
 
 DocumentViewer.propTypes = {
   document: PropTypes.object.isRequired,
   handleHeightUpdate: PropTypes.func.isRequired,
-  tabIndex: PropTypes.number
+  tabIndex: PropTypes.number,
+  obfuscateDocument: PropTypes.func
 };
 
 export default DocumentViewer;
