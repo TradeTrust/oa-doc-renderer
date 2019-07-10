@@ -17,7 +17,8 @@ jest.mock("./utils", () => ({
 
 const mockParent = {
   updateHeight: jest.fn(),
-  updateTemplates: jest.fn()
+  updateTemplates: jest.fn(),
+  selectTemplateTab: jest.fn()
 };
 
 connectToParent.mockReturnValue({ promise: Promise.resolve(mockParent) });
@@ -26,6 +27,7 @@ const resetMocks = () => {
   connectToParent.mockClear();
   mockParent.updateHeight.mockClear();
   mockParent.updateTemplates.mockClear();
+  mockParent.selectTemplateTab.mockClear();
 };
 
 beforeEach(() => {
@@ -56,8 +58,15 @@ it("calls parent frame's updateHeight when updateParentHeight is called", async 
 it("calls parent frame's updateTemplates when updateParentTemplateTabs is called", async () => {
   const component = shallow(<DocumentViewerContainer />);
   resetMocks();
-  await component.instance().updateParentTemplateTabs();
+  await component.instance().updateParentTemplateTabs(mockDocumentTemplateTabs);
   expect(mockParent.updateTemplates).toHaveBeenCalledWith(
     mockDocumentTemplateTabs
   );
+});
+
+it("calls parent frame's selectTemplateTab when selectTemplateTab is called", async () => {
+  const component = shallow(<DocumentViewerContainer />);
+  resetMocks();
+  await component.instance().selectTemplateTab(1);
+  expect(mockParent.selectTemplateTab).toHaveBeenCalledWith(1);
 });
