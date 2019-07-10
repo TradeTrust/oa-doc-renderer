@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import connectToParent from "penpal/lib/connectToParent";
 import DocumentViewer from "./documentViewer";
 import { documentTemplateTabs, inIframe } from "./utils";
@@ -44,7 +43,14 @@ class DocumentViewerContainer extends Component {
     }
   }
 
-  selectTemplateTab(tabIndex) {
+  async selectTemplateTab(tabIndex) {
+    if (inIframe()) {
+      const { parentFrameConnection } = this.state;
+      const parent = await parentFrameConnection;
+      if (parent.selectTemplateTab) {
+        await parent.selectTemplateTab(tabIndex);
+      }
+    }
     this.setState({ tabIndex });
   }
 
@@ -53,7 +59,6 @@ class DocumentViewerContainer extends Component {
   }
 
   componentDidUpdate() {
-    this.updateParentTemplateTabs();
     this.updateParentHeight();
   }
 
@@ -87,6 +92,7 @@ class DocumentViewerContainer extends Component {
         document={this.state.document}
         tabIndex={this.state.tabIndex}
         handleHeightUpdate={this.updateParentHeight}
+        updateParentTemplates={this.updateParentTemplateTabs}
       />
     );
   }

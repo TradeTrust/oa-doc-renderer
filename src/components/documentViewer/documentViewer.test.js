@@ -7,6 +7,9 @@ jest.mock("./utils", () => ({
   documentTemplates: jest.fn()
 }));
 
+const mockUpdateParentHeight = jest.fn();
+const mockUpdateParentTemplates = jest.fn();
+
 it("renders the right template depending on the tabIndex", () => {
   /* eslint-disable */
   documentTemplates.mockReturnValue([
@@ -19,10 +22,15 @@ it("renders the right template depending on the tabIndex", () => {
   const component = mount(
     <DocumentViewer
       document={document}
-      handleHeightUpdate={() => {}}
+      handleHeightUpdate={mockUpdateParentHeight}
+      updateParentTemplates={mockUpdateParentTemplates}
       tabIndex={0}
     />
   );
+  // componentDidMount functions should be called
+  expect(mockUpdateParentHeight).toHaveBeenCalled();
+  expect(mockUpdateParentTemplates).toHaveBeenCalled();
+
   // Check content from tab 1
   expect(component.find("#content").text()).toBe("bar");
 
