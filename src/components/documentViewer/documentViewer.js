@@ -7,7 +7,7 @@ const DocumentViewer = props => {
   const templates = documentTemplates(document, handleHeightUpdate);
   const Template = templates[tabIndex].template;
 
-  return <Template document={document} handleObfuscation={obfuscateDocument} /> />;
+  return <Template document={document} handleObfuscation={obfuscateDocument} />;
 };
 
 DocumentViewer.propTypes = {
