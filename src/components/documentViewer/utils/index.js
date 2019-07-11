@@ -18,13 +18,8 @@ export const documentTemplates = (document, handleHeightUpdate) => {
   return [...selectedTemplate, ...templatesFromAttachments];
 };
 
-export const documentTemplateTabs = document => {
-  const templates = documentTemplates(document);
-  return templates.map(template => ({
-    id: template.id,
-    label: template.label
-  }));
-};
+export const documentTemplateTabs = template =>
+  template ? template.map(o => ({ label: o.label, id: o.id })) : null;
 
 // Originally using https://tommcfarlin.com/check-if-a-page-is-in-an-iframe/
 // Currently using https://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
