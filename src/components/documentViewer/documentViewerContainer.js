@@ -12,7 +12,6 @@ class DocumentViewerContainer extends Component {
     this.selectTemplateTab = this.selectTemplateTab.bind(this);
     this.updateParentHeight = this.updateParentHeight.bind(this);
     this.updateParentTemplateTabs = this.updateParentTemplateTabs.bind(this);
-    this.getTemplates = this.getTemplates.bind(this);
     this.state = {
       parentFrameConnection: null,
       document: null,
@@ -46,13 +45,6 @@ class DocumentViewerContainer extends Component {
   }
 
   async selectTemplateTab(tabIndex) {
-    if (inIframe()) {
-      const { parentFrameConnection } = this.state;
-      const parent = await parentFrameConnection;
-      if (parent.selectTemplateTab) {
-        await parent.selectTemplateTab(tabIndex);
-      }
-    }
     this.setState({ tabIndex });
   }
 
@@ -71,7 +63,7 @@ class DocumentViewerContainer extends Component {
   componentDidMount() {
     const renderDocument = this.handleDocumentChange;
     const selectTemplateTab = this.selectTemplateTab;
-    const getTemplates = this.getTemplates;
+    const getTemplates = () => this.state.templates;
 
     window.openAttestation = {
       renderDocument,

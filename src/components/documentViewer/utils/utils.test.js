@@ -77,16 +77,14 @@ describe("documentTemplateTabs", () => {
       }
     ];
     expect(documentTemplateTabs(templates)).toEqual([
-      { id: "custom", label: "CUSTOM_TEMPLATE", template: undefined },
+      { id: "custom", label: "CUSTOM_TEMPLATE" },
       {
         id: "attachment1",
-        label: "TEMPLATE_FROM_ATTACHMENT1",
-        template: undefined
+        label: "TEMPLATE_FROM_ATTACHMENT1"
       },
       {
         id: "attachment2",
-        label: "TEMPLATE_FROM_ATTACHMENT2",
-        template: undefined
+        label: "TEMPLATE_FROM_ATTACHMENT2"
       }
     ]);
   });
