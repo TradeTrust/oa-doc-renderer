@@ -63,10 +63,3 @@ it("calls parent frame's updateTemplates when updateParentTemplateTabs is called
     mockDocumentTemplateTabs
   );
 });
-
-it("calls parent frame's selectTemplateTab when selectTemplateTab is called", async () => {
-  const component = shallow(<DocumentViewerContainer />);
-  resetMocks();
-  await component.instance().selectTemplateTab(1);
-  expect(mockParent.selectTemplateTab).toHaveBeenCalledWith(1);
-});
