@@ -44,13 +44,6 @@ class DocumentViewerContainer extends Component {
   }
 
   async selectTemplateTab(tabIndex) {
-    if (inIframe()) {
-      const { parentFrameConnection } = this.state;
-      const parent = await parentFrameConnection;
-      if (parent.selectTemplateTab) {
-        await parent.selectTemplateTab(tabIndex);
-      }
-    }
     this.setState({ tabIndex });
   }
 
