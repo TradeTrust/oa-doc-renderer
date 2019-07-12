@@ -63,12 +63,29 @@ describe("documentTemplates", () => {
 
 describe("documentTemplateTabs", () => {
   it("returns only the id and label of the template object", () => {
-    const document = { $template: { name: "custom" } };
-    const templates = documentTemplateTabs(document);
-    expect(templates).toEqual([
+    const templates = [
+      { id: "custom", label: "CUSTOM_TEMPLATE", template: "TEMPLATE_FN" },
+      {
+        id: "attachment1",
+        label: "TEMPLATE_FROM_ATTACHMENT1",
+        template: "TEMPLATE_FN"
+      },
+      {
+        id: "attachment2",
+        label: "TEMPLATE_FROM_ATTACHMENT2",
+        template: "TEMPLATE_FN"
+      }
+    ];
+    expect(documentTemplateTabs(templates)).toEqual([
       { id: "custom", label: "CUSTOM_TEMPLATE" },
-      { id: "attachment1", label: "TEMPLATE_FROM_ATTACHMENT1" },
-      { id: "attachment2", label: "TEMPLATE_FROM_ATTACHMENT2" }
+      {
+        id: "attachment1",
+        label: "TEMPLATE_FROM_ATTACHMENT1"
+      },
+      {
+        id: "attachment2",
+        label: "TEMPLATE_FROM_ATTACHMENT2"
+      }
     ]);
   });
 });
