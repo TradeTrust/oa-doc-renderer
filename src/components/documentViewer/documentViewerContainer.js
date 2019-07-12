@@ -36,11 +36,14 @@ class DocumentViewerContainer extends Component {
 
   // Use postMessage to update iframe's parent on the selection of templates available for this document
   async updateParentTemplateTabs() {
+    const templates = await documentTemplateTabs(this.state.document);
+    this.setState({ templates });
     if (inIframe()) {
       const { parentFrameConnection } = this.state;
       const parent = await parentFrameConnection;
-      if (parent.updateTemplates)
+      if (parent.updateTemplates) {
         await parent.updateTemplates(documentTemplateTabs(this.state.document));
+      }
     }
   }
 
@@ -50,20 +53,22 @@ class DocumentViewerContainer extends Component {
 
   handleDocumentChange(document) {
     this.setState({ document });
+    this.updateParentTemplateTabs();
   }
 
   componentDidUpdate() {
-    this.updateParentTemplateTabs();
     this.updateParentHeight();
   }
 
   componentDidMount() {
     const renderDocument = this.handleDocumentChange;
     const selectTemplateTab = this.selectTemplateTab;
+    const getTemplates = () => this.state.templates;
 
     window.openAttestation = {
       renderDocument,
-      selectTemplateTab
+      selectTemplateTab,
+      getTemplates
     };
 
     if (inIframe()) {
