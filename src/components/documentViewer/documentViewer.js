@@ -6,7 +6,6 @@ const DocumentViewer = props => {
   const { tabIndex, document, handleHeightUpdate } = props;
   const templates = documentTemplates(document, handleHeightUpdate);
   const Template = templates[tabIndex].template;
-  handleHeightUpdate();
 
   return <Template document={document} />;
 };
