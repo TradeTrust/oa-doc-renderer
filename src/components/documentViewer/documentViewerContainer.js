@@ -57,8 +57,8 @@ class DocumentViewerContainer extends Component {
     if (inIframe()) {
       const { parentFrameConnection } = this.state;
       const parent = await parentFrameConnection;
-      if (parent.updateCertificate) {
-        parent.updateCertificate(field);
+      if (parent.handleObfuscation) {
+        parent.handleObfuscation(field);
       }
     }
   }
