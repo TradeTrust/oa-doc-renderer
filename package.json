@@ -55,7 +55,7 @@
     "node-sass": "^4.13.0",
     "prettier": "^1.19.1",
     "react-test-renderer": "^16.12.0",
-    "sinon": "^7.5.0",
+    "sinon": "^8.0.0",
     "testcafe": "^1.7.0"
   }
 }
