@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import { get } from "lodash";
 import { formatDate } from "./common/functions";
-import { transcriptBg } from "./common/backgrounds";
 import "bootstrap/dist/css/bootstrap.css";
 import "./common/demoStyles.css";
 import {
@@ -12,6 +11,7 @@ import {
 import { GovtechOpencertsTemplateCertificate } from "../samples";
 import { PrintWatermark } from "./common/PrintWatermark";
 import govtechLogo from "./common/GOVTECH_logo.png";
+import transcriptBg from "./common/transcript-background.png";
 
 export const TranscriptTemplate: FunctionComponent<TemplateProps<GovtechOpencertsTemplateCertificate>> = ({
   document,
