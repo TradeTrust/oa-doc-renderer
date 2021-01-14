@@ -5,7 +5,8 @@ import { shallow } from "enzyme";
 jest.mock("./documentViewer", () => jest.fn());
 
 jest.mock("./utils", () => ({
-  inIframe: () => false
+  inIframe: () => false,
+  documentTemplateTabs: () => jest.fn()
 }));
 
 it("returns null if there are no document", () => {
