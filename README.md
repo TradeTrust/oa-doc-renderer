@@ -21,11 +21,11 @@ A sample iframe html file is included in `test/index.html` to help you test your
 
 # Styling your document
 
-The templates are defined in `src/templates`. 
+The templates are defined in `src/components/templates`. 
 
 ## Basic styling
 
-If you are only rendering one type of document, you may style the default template at `src/templates/default/template.js`. 
+If you are only rendering one type of document, you may style the default template at `src/components/templates/default/template.js`. 
 
 ## Multiple document templates
 
