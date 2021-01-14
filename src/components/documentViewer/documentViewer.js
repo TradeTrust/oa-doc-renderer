@@ -12,7 +12,6 @@ const DocumentViewer = props => {
 
 DocumentViewer.propTypes = {
   document: PropTypes.object.isRequired,
-  tabIndex: PropTypes.number,
   handleHeightUpdate: PropTypes.func.isRequired,
   tabIndex: PropTypes.number,
   handleObfuscation: PropTypes.func
